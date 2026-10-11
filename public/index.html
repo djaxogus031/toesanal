@@ -88,8 +88,11 @@ h1,h2,h3{font-family:var(--f-display);font-weight:800;margin:0;text-wrap:balance
 .envelope::before{content:"";position:absolute;inset:0 0 auto 0;height:8px;background:repeating-linear-gradient(90deg,var(--seal) 0 18px,transparent 18px 26px,var(--ink) 26px 44px,transparent 44px 52px);opacity:.75}
 .env-in{padding:30px 28px 26px;display:grid;gap:18px}
 @media(max-width:480px){.env-in{padding:26px 18px 20px}}
-.env-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-.env-head .title{font-family:var(--f-display);font-size:26px;font-weight:800;letter-spacing:.5em}
+.env-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:12px}
+.env-titles{flex:1 1 12em;min-width:12em}
+/* 자동 광고가 카드 안에 들어와도 제목 옆이 아니라 아래 한 줄을 통째로 쓰게 함 */
+.envelope .google-auto-placed,.env-head>ins{flex:1 1 100%;order:9;width:100%;max-width:100%}
+.env-head .title{font-family:var(--f-display);font-size:26px;font-weight:800;letter-spacing:.5em;white-space:nowrap}
 .stamp{width:74px;height:74px;flex:none;border-radius:50%;border:3px solid var(--seal);color:var(--seal);display:grid;place-items:center;text-align:center;font:800 13px/1.15 var(--f-display);transform:rotate(-12deg);opacity:.9}
 .verdict{font-family:var(--f-display);font-size:clamp(24px,3.2vw,34px);line-height:1.3;font-weight:800}
 .verdict .num{font-family:var(--f-mono);font-weight:700}
@@ -233,7 +236,7 @@ footer .wrap{display:grid;gap:6px}
     <article class="envelope" aria-live="polite">
       <div class="env-in">
         <div class="env-head">
-          <div>
+          <div class="env-titles">
             <div class="eyebrow" id="envDate"></div>
             <div class="title">사 직 서</div>
           </div>
