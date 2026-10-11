@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- 애드센스 승인 후 여기에 광고 스크립트를 넣으세요 -->
+<title>퇴사날</title>
+<meta name="description" content="언제 그만둬야 가장 많이 받을까. 입사일과 월급만 넣으면 퇴직금·연차수당·실업급여가 퇴사일에 따라 어떻게 달라지는지, 며칠만 더 버티면 얼마가 늘어나는지 2026년 기준으로 계산합니다.">
+<link rel="canonical" href="https://toesanal.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="퇴사날">
+<meta property="og:title" content="퇴사날 · 며칠 더 버티면 얼마 더 받을까">
+<meta property="og:description" content="입사일과 월급만 넣으면 퇴직금·연차수당·실업급여가 퇴사일에 따라 얼마나 달라지는지 계산합니다.">
+<meta property="og:url" content="https://toesanal.com/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700;800&family=Gothic+A1:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+/* Layout: 히어로가 곧 도구다. 왼쪽 조건 입력, 오른쪽 '사직서 봉투' 결과 카드. 아래로 퇴사일 그래프 → 놓치면 손해인 날 → 정산 내역 → 퇴사 후 일정 → 가이드. */
+:root{
+  --paper:#F3F4F7;      /* 서류 용지의 차가운 흰색 */
+  --sheet:#FFFFFF;
+  --ink:#1B2140;        /* 결재 서류 남색 잉크 */
+  --ink-2:#4F5573;
+  --ink-3:#8A8FA8;
+  --rule:#DADDE6;
+  --seal:#C9402A;       /* 인주 */
+  --seal-soft:#F8E3DE;
+  --hl:#F3D35B;         /* 형광펜 */
+  --go:#2E7D5B;
+  --shadow:0 1px 0 rgba(27,33,64,.04),0 18px 40px -24px rgba(27,33,64,.35);
+  --f-display:"Nanum Myeongjo","AppleMyungjo",Georgia,serif;
+  --f-body:"Gothic A1","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --r:6px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0F1222;--sheet:#171B30;--ink:#E8EAF3;--ink-2:#B0B5CC;--ink-3:#757B97;--rule:#2A2F4A;
+  --seal:#EE7A62;--seal-soft:#3A2220;--hl:#C9A93A;--go:#62C49A;
+  --shadow:0 1px 0 rgba(0,0,0,.25),0 18px 40px -24px rgba(0,0,0,.8);color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0F1222;--sheet:#171B30;--ink:#E8EAF3;--ink-2:#B0B5CC;--ink-3:#757B97;--rule:#2A2F4A;
+  --seal:#EE7A62;--seal-soft:#3A2220;--hl:#C9A93A;--go:#62C49A;
+  --shadow:0 1px 0 rgba(0,0,0,.25),0 18px 40px -24px rgba(0,0,0,.8);color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.7;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
+a{color:var(--ink)}
+h1,h2,h3{font-family:var(--f-display);font-weight:800;margin:0;text-wrap:balance;letter-spacing:-.01em}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.wrap{max-width:1160px;margin:0 auto;padding-inline:20px}
+@media(max-width:480px){.wrap{padding-inline:16px}}
+.eyebrow{font:600 12px var(--f-body);letter-spacing:.14em;color:var(--seal)}
+
+.top{border-bottom:1px solid var(--rule);background:var(--paper)}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:14px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-family:var(--f-display);font-weight:800;font-size:22px}
+.brand .sealmark{width:30px;height:30px;border-radius:50%;border:2px solid var(--seal);color:var(--seal);display:grid;place-items:center;font-size:13px;transform:rotate(-8deg)}
+.top nav{display:flex;gap:4px;flex-wrap:wrap}
+.top nav a{font-size:13px;color:var(--ink-2);text-decoration:none;padding:6px 10px;border-radius:999px}
+.top nav a:hover,.top nav a:focus-visible{background:var(--sheet);color:var(--ink)}
+@media(max-width:760px){.top nav{display:none}}
+
+.intro{padding-block:40px 24px;display:grid;gap:12px;max-width:760px}
+.intro h1{font-size:clamp(32px,5.2vw,56px);line-height:1.15}
+.intro h1 mark{background:linear-gradient(transparent 58%,var(--hl) 58%);color:inherit;padding:0 2px}
+.intro p{color:var(--ink-2);margin:0;font-size:16px;max-width:60ch}
+
+.tool{display:grid;grid-template-columns:340px minmax(0,1fr);gap:24px;align-items:start;padding-bottom:28px}
+@media(max-width:920px){.tool{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:22px}
+.panel h2{font-size:18px;margin-bottom:4px}
+.panel .sub{font-size:12px;color:var(--ink-3);margin:0 0 16px}
+.field{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;margin-bottom:14px;min-width:0}
+.field>label,.field>.lbl{font-size:13px;font-weight:600;color:var(--ink-2);display:flex;justify-content:space-between;gap:8px}
+.field small{font-weight:400;color:var(--ink-3)}
+.inp{display:flex;align-items:center;border:1px solid var(--rule);border-radius:var(--r);background:var(--paper)}
+.inp:focus-within{border-color:var(--ink);box-shadow:0 0 0 3px color-mix(in srgb,var(--ink) 14%,transparent)}
+.inp input,.inp select{flex:1;min-width:0;width:100%;border:0;background:transparent;color:var(--ink);font:500 15px var(--f-mono);padding:10px 12px;outline:none}
+.inp select{font-family:var(--f-body)}
+.inp span{font-size:13px;color:var(--ink-3);padding-right:12px}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.toggles{display:grid;gap:8px;margin-top:4px}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--ink-2);cursor:pointer}
+.check input{margin-top:4px;accent-color:var(--ink)}
+.hint{font-size:12px;color:var(--ink-3);margin:0}
+
+/* 사직서 봉투 카드 */
+.envelope{position:relative;background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.envelope::before{content:"";position:absolute;inset:0 0 auto 0;height:8px;background:repeating-linear-gradient(90deg,var(--seal) 0 18px,transparent 18px 26px,var(--ink) 26px 44px,transparent 44px 52px);opacity:.75}
+.env-in{padding:30px 28px 26px;display:grid;gap:18px}
+@media(max-width:480px){.env-in{padding:26px 18px 20px}}
+.env-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.env-head .title{font-family:var(--f-display);font-size:26px;font-weight:800;letter-spacing:.5em}
+.stamp{width:74px;height:74px;flex:none;border-radius:50%;border:3px solid var(--seal);color:var(--seal);display:grid;place-items:center;text-align:center;font:800 13px/1.15 var(--f-display);transform:rotate(-12deg);opacity:.9}
+.verdict{font-family:var(--f-display);font-size:clamp(24px,3.2vw,34px);line-height:1.3;font-weight:800}
+.verdict .num{font-family:var(--f-mono);font-weight:700}
+.verdict .plus{color:var(--seal)}
+.verdict .ok{color:var(--go)}
+.cmp{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:12px;align-items:stretch}
+.inp input[type=date]{min-width:0;width:100%}
+@media(max-width:560px){.cmp{grid-template-columns:minmax(0,1fr)}.cmp .arrow{display:none}}
+.cmp .box{border:1px solid var(--rule);border-radius:var(--r);padding:14px 16px;background:var(--paper)}
+.cmp .box.best{border-color:var(--seal);background:var(--seal-soft)}
+.cmp .box small{display:block;font-size:12px;color:var(--ink-3)}
+.cmp .box b{display:block;font-family:var(--f-mono);font-size:22px;font-weight:700;margin-top:2px}
+.cmp .box span{font-size:12px;color:var(--ink-2)}
+.cmp .arrow{display:grid;place-items:center;color:var(--ink-3);font-size:22px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{font:600 13px var(--f-body);border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:999px;padding:9px 16px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:focus-visible{outline:2px solid var(--seal);outline-offset:2px}
+.toast{font-size:12px;color:var(--go);align-self:center}
+
+.sec{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:28px;margin-bottom:24px;min-width:0}
+@media(max-width:480px){.sec{padding:20px 16px}}
+.sec-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.sec-h h2{font-size:clamp(21px,2.4vw,26px)}
+.sec .lead{color:var(--ink-2);margin:0 0 18px;max-width:64ch;font-size:14px}
+.chart{width:100%;height:auto;display:block}
+.chart text{font-family:var(--f-mono);font-size:11px;fill:var(--ink-3)}
+
+.events{display:grid;gap:0;border-top:1px solid var(--rule)}
+.ev{display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:16px;align-items:center;padding:14px 0;border-bottom:1px solid var(--rule)}
+@media(max-width:560px){.ev{grid-template-columns:1fr auto}.ev .d{grid-column:1/-1}}
+.ev .d{font-family:var(--f-mono);font-size:13px;color:var(--ink-2)}
+.ev .d b{display:block;font-size:15px;color:var(--ink)}
+.ev .w{font-size:14px}
+.ev .w small{display:block;color:var(--ink-3);font-size:12px}
+.ev .g{font-family:var(--f-mono);font-weight:700;color:var(--seal);white-space:nowrap}
+.ev.past{opacity:.55}
+.empty{color:var(--ink-3);font-size:14px;padding:12px 0}
+
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:520px;font-size:14px}
+th,td{padding:11px 8px;border-bottom:1px solid var(--rule);text-align:right}
+th:first-child,td:first-child{text-align:left}
+th{font-size:12px;font-weight:600;color:var(--ink-3)}
+td{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+td:first-child{font-family:var(--f-body)}
+td .why{display:block;font-family:var(--f-body);font-size:12px;color:var(--ink-3)}
+tr.total td{font-weight:700;border-bottom:2px solid var(--ink)}
+.col-best{background:var(--seal-soft)}
+
+.after{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media(max-width:860px){.after{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.after{grid-template-columns:1fr}}
+.step{border:1px solid var(--rule);border-radius:var(--r);padding:16px;background:var(--paper);display:grid;gap:4px;align-content:start}
+.step .when{font:700 12px var(--f-mono);color:var(--seal)}
+.step b{font-size:15px}
+.step p{margin:0;font-size:13px;color:var(--ink-2)}
+
+.ad{border:1px dashed var(--rule);border-radius:var(--r);min-height:100px;display:grid;place-items:center;text-align:center;color:var(--ink-3);font-size:12px;margin-bottom:24px}
+.ad b{display:block;font:500 10px var(--f-mono);letter-spacing:.2em}
+
+.guides{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media(max-width:760px){.guides{grid-template-columns:1fr}}
+details.g{border:1px solid var(--rule);border-radius:var(--r);background:var(--paper)}
+details.g summary{cursor:pointer;list-style:none;padding:16px 18px;display:grid;gap:2px}
+details.g summary::-webkit-details-marker{display:none}
+details.g summary small{font:600 11px var(--f-body);letter-spacing:.1em;color:var(--seal)}
+details.g summary strong{font-family:var(--f-display);font-size:18px;line-height:1.4}
+details.g[open] summary{border-bottom:1px dashed var(--rule)}
+details.g .body{padding:6px 18px 16px;font-size:14px;color:var(--ink-2)}
+details.g .body p{margin:10px 0}
+details.g .body ul{margin:8px 0;padding-left:18px}
+
+.basis{font-size:13px;color:var(--ink-2)}
+.basis ul{margin:8px 0 0;padding-left:18px;display:grid;gap:4px}
+footer{border-top:1px solid var(--rule);padding-block:28px 44px;font-size:12px;color:var(--ink-3)}
+footer .wrap{display:grid;gap:6px}
+:focus-visible{outline:2px solid var(--seal);outline-offset:2px}
+@media(prefers-reduced-motion:no-preference){
+  .stamp{animation:press .5s cubic-bezier(.2,1.6,.4,1) both}
+  @keyframes press{from{transform:rotate(-12deg) scale(1.25);opacity:.4}to{transform:rotate(-12deg) scale(1);opacity:.9}}
+}
+</style>
+</head><body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="sealmark" aria-hidden="true">날</span>퇴사날</a>
+    <nav aria-label="섹션">
+      <a href="#graph">퇴사일 그래프</a><a href="#events">놓치면 손해인 날</a><a href="#detail">정산 내역</a><a href="#after">퇴사 후 일정</a><a href="#guide">가이드</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top" class="wrap">
+  <section class="intro">
+    <div class="eyebrow">2026년 10월 기준 · 근로기준법 · 고용보험법 반영</div>
+    <h1>그만두기 전에, <mark>며칠 더 버티면 얼마</mark>인지 보세요.</h1>
+    <p>퇴직금, 연차수당, 실업급여는 퇴사일이 하루만 달라도 수백만 원이 갈립니다. 입사일과 월급만 넣으면 오늘부터 18개월 동안 매일 퇴사했을 때 받는 돈을 계산해, 놓치면 손해인 날을 찾아 드립니다.</p>
+  </section>
+
+  <section class="tool" aria-label="퇴사 정산 계산">
+    <form class="panel" id="form" onsubmit="return false">
+      <h2>내 조건</h2>
+      <p class="sub">처음 보이는 값은 예시입니다. 입력값은 이 기기에만 저장됩니다.</p>
+      <div class="two">
+        <div class="field"><label for="join">입사일</label><div class="inp"><input id="join" type="date" value="2025-11-17"></div></div>
+        <div class="field"><label for="quit">퇴사 희망일 <small>마지막 근무일</small></label><div class="inp"><input id="quit" type="date"></div></div>
+      </div>
+      <div class="field">
+        <label for="pay">월급 <small>세전, 최근 3개월 평균</small></label>
+        <div class="inp"><input id="pay" inputmode="numeric" autocomplete="off" value="3,200,000"><span>원</span></div>
+      </div>
+      <div class="two">
+        <div class="field"><label for="bonus">연간 상여금</label><div class="inp"><input id="bonus" inputmode="numeric" autocomplete="off" value="0"><span>원</span></div></div>
+        <div class="field"><label for="leave">남은 연차</label><div class="inp"><input id="leave" inputmode="decimal" autocomplete="off" value="3"><span>일</span></div></div>
+      </div>
+      <div class="two">
+        <div class="field"><label for="birth">출생 연도</label><div class="inp"><input id="birth" inputmode="numeric" autocomplete="off" value="1995"><span>년</span></div></div>
+        <div class="field"><label for="hours">주 근무시간</label><div class="inp"><input id="hours" inputmode="decimal" autocomplete="off" value="40"><span>시간</span></div></div>
+      </div>
+      <div class="field">
+        <label for="reason">퇴사 사유</label>
+        <div class="inp"><select id="reason">
+          <option value="vol">개인 사정으로 그만둠 (자진 퇴사)</option>
+          <option value="inv">권고사직 · 해고 · 계약만료</option>
+          <option value="just">자진 퇴사지만 정당한 사유 있음 (임금체불, 통근 곤란 등)</option>
+        </select></div>
+      </div>
+      <div class="field">
+        <label for="prevIns">이전 직장 고용보험 기간 <small>없으면 0</small></label>
+        <div class="inp"><input id="prevIns" inputmode="decimal" autocomplete="off" value="0"><span>년</span></div>
+      </div>
+      <div class="toggles">
+        <label class="check"><input type="checkbox" id="five" checked> 회사 직원이 5명 이상이에요 <span class="hint">(5인 미만은 연차 규정이 없어요)</span></label>
+      </div>
+    </form>
+
+    <article class="envelope" aria-live="polite">
+      <div class="env-in">
+        <div class="env-head">
+          <div>
+            <div class="eyebrow" id="envDate"></div>
+            <div class="title">사 직 서</div>
+          </div>
+          <div class="stamp" id="stamp">퇴사<br>가능</div>
+        </div>
+        <div class="verdict" id="verdict"></div>
+        <div class="cmp">
+          <div class="box"><small id="cmpALbl">희망일에 퇴사하면</small><b id="cmpA"></b><span id="cmpAsub"></span></div>
+          <div class="arrow" aria-hidden="true">→</div>
+          <div class="box best" id="cmpBbox"><small id="cmpBLbl"></small><b id="cmpB"></b><span id="cmpBsub"></span></div>
+        </div>
+        <p class="hint" id="note"></p>
+        <div class="actions">
+          <button class="btn" type="button" id="copy">결과 문구 복사</button>
+          <button class="btn ghost" type="button" id="useBest">추천 날짜로 바꿔보기</button>
+          <span class="toast" id="toast" role="status"></span>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <div class="ad" role="complementary" aria-label="광고"><div><b>ADVERTISEMENT</b>광고 영역 · 반응형</div></div>
+
+  <section class="sec" id="graph" aria-labelledby="graph-t">
+    <div class="sec-h"><h2 id="graph-t">퇴사일에 따라 받는 돈</h2><span class="hint">세전 · 퇴직금 + 연차수당 + 실업급여</span></div>
+    <p class="lead">가로축은 마지막 근무일, 세로축은 그날 그만두면 받는 정산금 합계입니다. 계단처럼 뛰는 지점이 놓치면 손해인 날입니다. 그 사이 받는 월급은 넣지 않았습니다.</p>
+    <svg class="chart" id="chart" viewBox="0 0 720 280" role="img" aria-label="퇴사일별 정산금 그래프"></svg>
+  </section>
+
+  <section class="sec" id="events" aria-labelledby="ev-t">
+    <div class="sec-h"><h2 id="ev-t">놓치면 손해인 날</h2><span class="hint">희망일 이후 18개월</span></div>
+    <p class="lead">이 날짜를 넘기고 그만두면 받는 돈이 한 번에 늘어납니다. 날짜는 모두 마지막 근무일 기준입니다.</p>
+    <div class="events" id="evList"></div>
+  </section>
+
+  <section class="sec" id="detail" aria-labelledby="dt-t">
+    <div class="sec-h"><h2 id="dt-t">정산 내역 비교</h2></div>
+    <p class="lead">각 금액이 어떻게 나왔는지 계산 근거를 함께 적었습니다. 회사에 확인할 때 그대로 쓰셔도 됩니다.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>항목</th><th id="thA">희망일</th><th id="thB" class="col-best">추천일</th></tr></thead>
+      <tbody id="dtBody"></tbody>
+    </table></div>
+  </section>
+
+  <section class="sec" id="after" aria-labelledby="af-t">
+    <div class="sec-h"><h2 id="af-t">퇴사 후 챙길 일정</h2><span class="hint" id="afBase"></span></div>
+    <p class="lead">기한을 넘기면 받을 수 있는 돈도 사라집니다. 희망일 기준으로 날짜를 계산했습니다.</p>
+    <div class="after" id="afList"></div>
+  </section>
+
+  <div class="ad" role="complementary" aria-label="광고"><div><b>ADVERTISEMENT</b>광고 영역 · 인피드</div></div>
+
+  <section class="sec" id="guide" aria-labelledby="gd-t">
+    <div class="sec-h"><h2 id="gd-t">퇴사 전에 읽는 가이드</h2></div>
+    <div class="guides">
+      <details class="g" open>
+        <summary><small>퇴직금</small><strong>1년에서 하루 모자라면 퇴직금은 0원입니다</strong></summary>
+        <div class="body">
+          <p>퇴직금은 계속 근로한 기간이 1년 이상이고, 4주 평균으로 주 15시간 이상 일한 사람에게 생깁니다(근로자퇴직급여 보장법 제4조). 364일을 일하고 그만두면 한 푼도 받지 못하지만, 365일을 채우면 약 한 달 치 월급이 생깁니다.</p>
+          <p>금액은 <b>1일 평균임금 × 30일 × 재직일수 ÷ 365</b>입니다. 평균임금은 퇴사 전 3개월 동안 받은 임금을 그 기간의 날짜 수로 나눈 값이고, 상여금과 연차수당은 1년 치의 3/12만큼 더합니다.</p>
+        </div>
+      </details>
+      <details class="g">
+        <summary><small>연차수당</small><strong>입사 1년이 되는 날까지 다니면 연차 15일이 생깁니다</strong></summary>
+        <div class="body">
+          <p>1년 동안 80% 이상 출근하면 다음 해 연차 15일이 생기고, 3년차부터 2년마다 하루씩 늘어 최대 25일입니다(근로기준법 제60조). 입사 첫해에는 한 달 개근할 때마다 1일씩 최대 11일이 생깁니다.</p>
+          <p>고용노동부는 1년을 일하고 그 다음 날에도 근로관계가 남아 있어야 15일이 생긴다고 해석합니다. 그래서 마지막 근무일이 입사일과 같은 날짜(예: 3월 4일 입사면 다음 해 3월 4일)까지 가야 합니다. 퇴사할 때 쓰지 못한 연차는 수당으로 받습니다.</p>
+          <p>직원이 5명 미만인 사업장에는 연차 규정이 적용되지 않습니다.</p>
+        </div>
+      </details>
+      <details class="g">
+        <summary><small>실업급여</small><strong>자진 퇴사도 실업급여를 받을 수 있는 경우</strong></summary>
+        <div class="body">
+          <p>실업급여(구직급여)는 퇴사 전 18개월 동안 고용보험 가입 일수가 180일 이상이고, 회사 사정이나 계약만료 등 비자발적으로 그만둔 경우에 받습니다. 자진 퇴사라도 다음과 같은 정당한 사유가 있으면 받을 수 있습니다.</p>
+          <ul>
+            <li>임금을 2개월 이상 받지 못했거나 최저임금에 못 미친 경우</li>
+            <li>회사 이전 등으로 왕복 통근이 3시간 이상이 된 경우</li>
+            <li>직장 내 괴롭힘·성희롱을 겪은 경우</li>
+            <li>질병이나 부상으로 일을 계속하기 어려운 경우</li>
+          </ul>
+          <p>2026년 하루 지급액은 평균임금의 60%이며, 최저 66,048원, 최대 68,100원입니다. 받는 기간은 고용보험 가입 기간과 나이(50세 이상 여부)에 따라 120일에서 270일입니다.</p>
+        </div>
+      </details>
+      <details class="g">
+        <summary><small>타이밍</small><strong>실업급여 받는 기간이 늘어나는 날도 있습니다</strong></summary>
+        <div class="body">
+          <p>고용보험 가입 기간이 1년, 3년, 5년, 10년을 넘는 순간 받을 수 있는 일수가 30일씩 늘어납니다. 50세가 되는 날을 넘기면 같은 가입 기간에도 30일이 더 붙습니다.</p>
+          <p>30일이면 하루 상한액 기준으로 약 200만 원입니다. 비자발적 퇴사가 예정된 상황이라면 이 날짜를 미리 확인해 두세요. 이전 직장의 가입 기간도 합산되지만, 이전에 실업급여를 받았다면 그 전 기간은 빠집니다.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section class="sec basis" aria-labelledby="bs-t">
+    <div class="sec-h"><h2 id="bs-t">계산 기준</h2><span class="hint">최종 확인 2026년 10월</span></div>
+    <ul>
+      <li>2026년 최저임금 시급 10,320원 · 구직급여 하한 66,048원(최저임금의 80% × 8시간), 상한 68,100원</li>
+      <li>소정급여일수: 가입 1년 미만 120일 / 1~3년 150·180일 / 3~5년 180·210일 / 5~10년 210·240일 / 10년 이상 240·270일 (50세 미만·이상)</li>
+      <li>통상임금 일급: 월급 ÷ (주 근무시간 × 1.2 × 4.345) × (주 근무시간 ÷ 5)</li>
+      <li>피보험단위기간 180일은 주 5일 근무 기준 약 7개월로 간주했습니다. 정확한 판단은 고용센터에서 합니다.</li>
+      <li>입사 첫해 월 단위 연차와 매년 생기는 연차는 1년 안에 쓰거나 정산되므로, 새 연차가 생기면 그 해 연차만 남는다고 보고 계산했습니다.</li>
+      <li>모든 금액은 세전 추정치입니다. 퇴직소득세, 단시간 근로자 하한액 특례, 상여금 지급일, 회사별 취업규칙은 반영하지 않았습니다.</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><b style="color:var(--ink)">퇴사날</b> · 퇴사일 정산 시뮬레이터 · <a href="/about.html">소개</a> · <a href="/privacy.html">개인정보처리방침</a></div>
+    <div>이 계산 결과는 참고용이며 법적 효력이 없습니다. 실업급여 수급 자격은 고용센터(국번 없이 1350), 퇴직금 분쟁은 관할 노동청에서 확인하세요.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const won = n => Math.round(n).toLocaleString('ko-KR');
+  const man = n => { n = Math.round(n); if (Math.abs(n) >= 1e8) return (n/1e8).toFixed(2).replace(/\.?0+$/,'')+'억원'; if (Math.abs(n) >= 1e4) return Math.round(n/1e4).toLocaleString('ko-KR')+'만원'; return won(n)+'원'; };
+  const parse = s => Number(String(s).replace(/[^\d.]/g,'')) || 0;
+
+  // 날짜는 UTC 자정 기준 정수 일로 다룬다
+  const DAY = 864e5;
+  const toD = s => { const [y,m,d] = s.split('-').map(Number); return Date.UTC(y,m-1,d)/DAY; };
+  const toS = n => new Date(n*DAY).toISOString().slice(0,10);
+  const fmt = n => { const d = new Date(n*DAY); return `${d.getUTCFullYear()}. ${d.getUTCMonth()+1}. ${d.getUTCDate()}.`; };
+  const fmtShort = n => { const d = new Date(n*DAY); return `${String(d.getUTCFullYear()).slice(2)}.${d.getUTCMonth()+1}.${d.getUTCDate()}`; };
+  const addM = (n, k) => { const d = new Date(n*DAY); const y = d.getUTCFullYear(), m = d.getUTCMonth()+k, day = d.getUTCDate(); const last = new Date(Date.UTC(y, m+1, 0)).getUTCDate(); return Date.UTC(y, m, Math.min(day,last))/DAY; };
+  const addY = (n, k) => addM(n, 12*k);
+  const now = new Date(); const TODAY = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())/DAY;
+
+  const UI_MIN = 66048, UI_MAX = 68100;
+  const UI_TABLE = [[1,120,120],[3,150,180],[5,180,210],[10,210,240],[Infinity,240,270]];
+
+  const st = {};
+  const IDS = ['join','quit','pay','bonus','leave','birth','hours','reason','prevIns','five'];
+  try { const s = JSON.parse(localStorage.getItem('toesagak-v1')||'null'); if (s) IDS.forEach(k => { if (s[k]==null) return; if (k==='five') $(k).checked = s[k]; else $(k).value = s[k]; }); } catch(e){}
+  if (!$('quit').value) $('quit').value = toS(TODAY);
+  function save(){ try { const o={}; IDS.forEach(k => o[k] = k==='five' ? $(k).checked : $(k).value); localStorage.setItem('toesagak-v1', JSON.stringify(o)); } catch(e){} }
+
+  function read(){
+    st.join = $('join').value ? toD($('join').value) : TODAY - 365;
+    st.quit = $('quit').value ? toD($('quit').value) : TODAY;
+    if (st.quit < st.join) st.quit = st.join;
+    st.pay = parse($('pay').value);
+    st.bonus = parse($('bonus').value);
+    st.leave = Math.min(parse($('leave').value), 100);
+    st.birth = parse($('birth').value) || 1995;
+    st.hours = Math.min(parse($('hours').value) || 40, 52);
+    st.reason = $('reason').value;
+    st.prevIns = Math.min(parse($('prevIns').value), 40);
+    st.five = $('five').checked;
+    // 남은 연차는 오늘 기준. 오늘 이후 새로 생기는 연차만 더한다.
+    st.base = Math.max(TODAY, st.join);
+  }
+
+  function leaveGrants(last){
+    // base(오늘) 이후 ~ last 사이 새로 생기는 연차: [날짜, 일수, 사유]
+    const out = [];
+    if (!st.five || st.hours < 15) return out;
+    for (let m = 1; m <= 11; m++) { const d = addM(st.join, m); if (d > st.base && d <= last) out.push([d, 1, `입사 ${m}개월 개근 연차`]); }
+    for (let k = 1; k <= 45; k++) { const d = addY(st.join, k); if (d > last) break; if (d > st.base) out.push([d, Math.min(25, 15 + Math.floor((k-1)/2)), `입사 ${k}주년 연차`]); }
+    return out;
+  }
+
+  function settle(last){
+    const days = last - st.join + 1;             // 재직일수
+    const fullTime = st.hours >= 15;
+    const ordDaily = st.pay / (st.hours*1.2*4.345) * (st.hours/5);
+    const grants = leaveGrants(last);
+    // 연차는 1년 안에 쓰거나 정산되므로, 새 연차가 생기면 그 해 연차로 다시 시작한다.
+    let leaveDays = 0;
+    if (st.five && fullTime) {
+      const annual = grants.filter(g => g[2].includes('주년'));
+      leaveDays = annual.length ? annual[annual.length-1][1] : st.leave + grants.reduce((a,g)=>a+g[1],0);
+    }
+    const leavePay = leaveDays * ordDaily;
+    const period3 = last - addM(last, -3);
+    const wage3 = st.pay * 3;
+    const avgDaily = (wage3 + st.bonus*3/12 + leavePay*3/12) / period3;
+    const sevOk = fullTime && days >= 365;
+    const sev = sevOk ? avgDaily * 30 * days / 365 : 0;
+    // 실업급여
+    const insYears = days/365 + st.prevIns;
+    const age = new Date(last*DAY).getUTCFullYear() - st.birth;  // 연 나이 근사
+    const row = UI_TABLE.find(r => insYears < r[0]);
+    const uiDays = age >= 50 ? row[2] : row[1];
+    const unitOk = Math.min(days, 548) * 6/7 >= 180 || st.prevIns > 0 && days*6/7 + Math.min(st.prevIns*365, 548-days)*6/7 >= 180;
+    const reasonOk = st.reason !== 'vol';
+    const uiDaily = Math.min(UI_MAX, Math.max(UI_MIN, st.pay*3/period3*0.6));
+    const uiOk = reasonOk && unitOk && fullTime;
+    const ui = uiOk ? uiDays * uiDaily : 0;
+    return {last, days, sev, sevOk, leaveDays, leavePay, ordDaily, avgDaily, ui, uiOk, uiDays, uiDaily, unitOk, reasonOk, insYears, age, total: sev+leavePay+ui, grants};
+  }
+
+  const HORIZON = 548;
+  function scan(){
+    const pts = [];
+    for (let d = st.quit; d <= st.quit + HORIZON; d++) pts.push(settle(d));
+    // 이벤트: 하루 사이에 크게 뛰는 날
+    const evs = [];
+    for (let i = 1; i < pts.length; i++) {
+      const a = pts[i-1], b = pts[i], jump = b.total - a.total;
+      const trend = b.avgDaily * 30 / 365 * 1.5 + 1000;
+      if (jump > Math.max(trend, 30000)) {
+        const why = [];
+        if (!a.sevOk && b.sevOk) why.push(['퇴직금이 생깁니다', '근속 1년 달성']);
+        if (b.leaveDays !== a.leaveDays && b.grants.some(g => g[0] === b.last)) { const g = b.grants.find(g => g[0] === b.last); why.push([`새 연차 ${g[1]}일이 생깁니다`, g[2]]); }
+        if (b.uiOk && !a.uiOk) why.push(['실업급여 자격이 생깁니다', '고용보험 약 7개월 충족']);
+        else if (b.uiOk && b.uiDays > a.uiDays) why.push([`실업급여가 ${b.uiDays - a.uiDays}일 늘어납니다`, b.age >= 50 && a.age < 50 ? '50세 구간 진입' : `고용보험 ${Math.round(b.insYears)}년 구간 진입`]);
+        if (!why.length) continue;
+        evs.push({d: b.last, gain: jump, why, after: b.total});
+      }
+    }
+    return {pts, evs};
+  }
+
+  function pickBest(cur, evs){
+    // 가장 가까운 큰 점프(희망일 대비 가장 '하루당 이득'이 큰 날)
+    let best = null;
+    for (const e of evs) {
+      const wait = e.d - st.quit;
+      const gain = e.after - cur.total;
+      const perDay = gain / Math.max(wait,1);
+      if (gain < 50000) continue;
+      if (!best || perDay > best.perDay) best = {e, wait, gain, perDay};
+    }
+    return best;
+  }
+
+  let lastResult = null;
+  function render(){
+    read();
+    const cur = settle(st.quit);
+    const {pts, evs} = scan();
+    const best = pickBest(cur, evs);
+    const bestS = best ? settle(best.e.d) : cur;
+    lastResult = {cur, best, bestS};
+
+    $('envDate').textContent = `제출 예정일 ${fmt(st.quit)} · 재직 ${cur.days.toLocaleString()}일`;
+    if (best) {
+      $('verdict').innerHTML = `<span class="num">${best.wait}</span>일만 더 버티면<br><span class="plus">+<span class="num">${man(best.gain)}</span></span> 더 받습니다.`;
+      $('stamp').innerHTML = '보류<br>권장';
+    } else {
+      $('verdict').innerHTML = `<span class="ok">지금 그만둬도</span><br>손해 보는 날은 없습니다.`;
+      $('stamp').innerHTML = '퇴사<br>가능';
+    }
+    $('cmpALbl').textContent = `${fmtShort(st.quit)} 퇴사하면`;
+    $('cmpA').textContent = won(cur.total)+'원';
+    $('cmpAsub').textContent = parts(cur);
+    $('cmpBbox').hidden = !best;
+    document.querySelector('.cmp .arrow').hidden = !best;
+    if (best) {
+      $('cmpBLbl').textContent = `${fmtShort(best.e.d)} 퇴사하면`;
+      $('cmpB').textContent = won(bestS.total)+'원';
+      $('cmpBsub').textContent = best.e.why.map(w=>w[0]).join(' · ');
+    }
+    const notes = [];
+    if (st.reason === 'vol') notes.push('자진 퇴사는 실업급여가 원칙적으로 나오지 않아 0원으로 계산했습니다. 정당한 사유가 있다면 퇴사 사유를 바꿔 보세요.');
+    if (st.hours < 15) notes.push('주 15시간 미만이면 퇴직금과 연차가 생기지 않습니다.');
+    if (best) notes.push('추천일까지 일하는 동안 받는 월급은 위 금액에 넣지 않았습니다.');
+    $('note').textContent = notes.join(' ');
+    $('useBest').hidden = !best;
+
+    renderChart(pts, evs, best);
+    renderEvents(evs, cur);
+    renderTable(cur, best ? bestS : null);
+    renderAfter();
+    save();
+  }
+  function parts(s){
+    const a = [];
+    if (s.sev) a.push('퇴직금'); if (s.leavePay) a.push(`연차 ${+s.leaveDays.toFixed(1)}일`); if (s.ui) a.push(`실업급여 ${s.uiDays}일`);
+    return a.length ? a.join(' · ') : '받을 정산금이 없습니다';
+  }
+
+  function renderChart(pts, evs, best){
+    const W=720,H=280,L=62,R=18,T=20,B=34;
+    const maxY = Math.max(1, ...pts.map(p=>p.total)) * 1.12;
+    const n = pts.length-1;
+    const sx = i => L + i/n*(W-L-R), sy = v => T + (1-v/maxY)*(H-T-B);
+    const raw = maxY/4, p10 = Math.pow(10, Math.floor(Math.log10(raw)));
+    const step = [1,2,2.5,5,10].map(k=>k*p10).find(k=>k>=raw);
+    let g = '';
+    for (let v=0; v<=maxY; v+=step) g += `<line x1="${L}" x2="${W-R}" y1="${sy(v).toFixed(1)}" y2="${sy(v).toFixed(1)}" stroke="var(--rule)"/><text x="${L-8}" y="${(sy(v)+4).toFixed(1)}" text-anchor="end">${v===0?'0':man(v).replace('원','')}</text>`;
+    for (let k=0; k<=6; k++) { const i = Math.round(n*k/6); g += `<text x="${sx(i).toFixed(1)}" y="${H-12}" text-anchor="middle">${fmtShort(pts[i].last)}</text>`; }
+    let d = `M${sx(0).toFixed(1)} ${sy(pts[0].total).toFixed(1)}`;
+    for (let i=1;i<=n;i++) d += ` L${sx(i).toFixed(1)} ${sy(pts[i].total).toFixed(1)}`;
+    const area = d + ` L${sx(n).toFixed(1)} ${sy(0).toFixed(1)} L${sx(0).toFixed(1)} ${sy(0).toFixed(1)} Z`;
+    let marks = '';
+    evs.forEach(e => { const i = e.d - st.quit; const isBest = best && best.e.d === e.d;
+      marks += `<line x1="${sx(i).toFixed(1)}" x2="${sx(i).toFixed(1)}" y1="${sy(e.after).toFixed(1)}" y2="${sy(0)}" stroke="${isBest?'var(--seal)':'var(--ink-3)'}" stroke-dasharray="3 3" stroke-width="1"/>
+      <circle cx="${sx(i).toFixed(1)}" cy="${sy(e.after).toFixed(1)}" r="${isBest?6:4}" fill="${isBest?'var(--seal)':'var(--sheet)'}" stroke="${isBest?'var(--sheet)':'var(--ink)'}" stroke-width="2"/>`; });
+    marks += `<circle cx="${sx(0)}" cy="${sy(pts[0].total).toFixed(1)}" r="5" fill="var(--ink)" stroke="var(--sheet)" stroke-width="2"/>`;
+    if (best) { const i = best.e.d - st.quit; const x = sx(i), anchor = x > W-140 ? 'end' : 'start';
+      marks += `<text x="${(anchor==='end'?x-10:x+10).toFixed(1)}" y="${(sy(best.e.after)-10).toFixed(1)}" text-anchor="${anchor}" style="fill:var(--seal);font-weight:700">+${man(best.gain)} · D-${best.wait}</text>`; }
+    $('chart').innerHTML = g + `<path d="${area}" fill="var(--ink)" fill-opacity=".07"/><path d="${d}" fill="none" stroke="var(--ink)" stroke-width="2.2" stroke-linejoin="round"/>` + marks;
+  }
+
+  function renderEvents(evs, cur){
+    if (!evs.length) { $('evList').innerHTML = '<div class="empty">앞으로 18개월 안에 정산금이 한 번에 뛰는 날이 없습니다. 퇴직금은 하루에 약 '+won(cur.avgDaily*30/365)+'원씩 조금씩 늘어납니다.</div>'; return; }
+    $('evList').innerHTML = evs.slice(0,8).map(e => {
+      const wait = e.d - st.quit;
+      return `<div class="ev"><div class="d"><b>${fmt(e.d)}</b>D-${wait}</div><div class="w">${e.why.map(w=>w[0]).join(', ')}<small>${e.why.map(w=>w[1]).join(' · ')} · 이날 퇴사 시 총 ${won(e.after)}원</small></div><div class="g">+${won(e.gain)}원</div></div>`;
+    }).join('');
+  }
+
+  function renderTable(a, b){
+    $('thA').textContent = `${fmtShort(a.last)} 퇴사`;
+    $('thB').hidden = !b;
+    const rows = [
+      ['퇴직금', s => s.sev, s => s.sevOk ? `평균임금 ${won(s.avgDaily)}원 × 30 × ${s.days}/365` : (st.hours < 15 ? '주 15시간 미만' : `재직 ${s.days}일 · 365일 미만`)],
+      ['연차수당', s => s.leavePay, s => (!st.five ? '5인 미만 사업장' : `${+s.leaveDays.toFixed(1)}일 × 통상일급 ${won(s.ordDaily)}원`)],
+      ['실업급여', s => s.ui, s => s.uiOk ? `${s.uiDays}일 × ${won(s.uiDaily)}원` : (!s.reasonOk ? '자진 퇴사 · 원칙상 미지급' : !s.unitOk ? '고용보험 180일 미충족' : '자격 미충족')],
+    ];
+    let html = rows.map(([n,f,w]) => `<tr><td>${n}<span class="why">${w(a)}</span></td><td>${won(f(a))}</td>${b?`<td class="col-best">${won(f(b))}<span class="why">${w(b)}</span></td>`:''}</tr>`).join('');
+    html += `<tr class="total"><td>합계 (세전)</td><td>${won(a.total)}</td>${b?`<td class="col-best">${won(b.total)}</td>`:''}</tr>`;
+    $('dtBody').innerHTML = html;
+  }
+
+  function renderAfter(){
+    const q = st.quit;
+    $('afBase').textContent = `마지막 근무일 ${fmt(q)} 기준`;
+    const items = [
+      [q+14, '퇴직금·남은 임금 지급 기한', '퇴사 후 14일 안에 회사가 모두 지급해야 합니다. 늦으면 지연이자(연 20%)를 청구할 수 있습니다.'],
+      [q+1, '실업급여 신청 시작', '워크넷 구직 등록 후 고용센터에 신청합니다. 신청 후 7일은 대기 기간입니다.'],
+      [addM(q, 12), '실업급여 수급 마감', '퇴사 다음 날부터 12개월이 지나면 남은 일수가 있어도 받을 수 없습니다. 늦게 신청할수록 손해입니다.'],
+      [addM(q, 2), '건강보험 임의계속가입', '지역가입자 보험료가 더 비싸다면 첫 고지서 납부기한부터 2개월 안에 신청하면 직장 때 보험료로 최대 36개월 유지됩니다.'],
+    ].sort((x,y)=>x[0]-y[0]);
+    $('afList').innerHTML = items.map(([d,t,p]) => `<div class="step"><span class="when">${fmt(d)}</span><b>${t}</b><p>${p}</p></div>`).join('');
+  }
+
+  // 입력 처리
+  document.querySelectorAll('#form input, #form select').forEach(el => el.addEventListener('input', () => {
+    if (el.inputMode === 'numeric') { const pos = el.value.length - (el.selectionStart||0); const n = parse(el.value); el.value = n ? n.toLocaleString('ko-KR') : ''; try { el.setSelectionRange(el.value.length-pos, el.value.length-pos); } catch(e){} }
+    render();
+  }));
+  document.querySelectorAll('#form input[type=checkbox]').forEach(el => el.addEventListener('change', render));
+  $('useBest').addEventListener('click', () => { if (lastResult && lastResult.best) { $('quit').value = toS(lastResult.best.e.d); render(); $('quit').focus(); } });
+  $('copy').addEventListener('click', () => {
+    const r = lastResult; if (!r) return;
+    const text = r.best
+      ? `퇴사날 계산 결과: ${fmt(r.cur.last)}에 그만두면 ${won(r.cur.total)}원, ${r.best.wait}일 더 다녀서 ${fmt(r.best.e.d)}에 그만두면 ${won(r.bestS.total)}원 (+${won(r.best.gain)}원). ${r.best.e.why.map(w=>w[0]).join(', ')}.`
+      : `퇴사날 계산 결과: ${fmt(r.cur.last)}에 그만둬도 손해 보는 날이 없어요. 정산금 ${won(r.cur.total)}원.`;
+    const done = () => { $('toast').textContent = '복사했어요'; setTimeout(()=>$('toast').textContent='', 2000); };
+    try { navigator.clipboard.writeText(text).then(done, () => { $('toast').textContent = text; }); } catch(e) { $('toast').textContent = text; }
+  });
+
+  render();
+})();
+</script>
+
+</body></html>

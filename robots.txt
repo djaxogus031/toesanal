@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://toesanal.com/sitemap.xml
