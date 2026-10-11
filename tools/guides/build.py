@@ -7,7 +7,8 @@ ROOT = sys.argv[1]  # repo/public
 about = open(os.path.join(ROOT, "about.html"), encoding="utf-8").read()
 css = re.search(r"<style>(.*?)</style>", about, re.S).group(1)
 fonts = re.search(r'<link rel="stylesheet"[^>]+>', about).group(0)
-ads = ('<meta name="google-adsense-account" content="ca-pub-9077925235959210">\n'
+ads = ('<meta name="naver-site-verification" content="9d2c38a4361cf3d8869b1b6ad65aa8aba915e0a4" />\n'
+       '<meta name="google-adsense-account" content="ca-pub-9077925235959210">\n'
        '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9077925235959210" crossorigin="anonymous"></script>')
 DATE = "2026-10-11"
 EXTRA = """
