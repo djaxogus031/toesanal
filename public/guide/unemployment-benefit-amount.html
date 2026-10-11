@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>2026 실업급여 금액과 받는 기간: 하루 66,048원부터 최대 270일 | 퇴사날</title><meta name="description" content="2026년 구직급여는 평균임금의 60%, 1일 하한 66,048원·상한 68,100원입니다. 가입기간과 나이에 따라 120일에서 270일까지 받습니다.">
+<link rel="canonical" href="https://toesanal.com/guide/unemployment-benefit-amount.html"><meta property="og:type" content="article"><meta property="og:title" content="2026 실업급여 금액과 받는 기간: 하루 66,048원부터 최대 270일 | 퇴사날"><meta property="og:description" content="2026년 구직급여는 평균임금의 60%, 1일 하한 66,048원·상한 68,100원입니다. 가입기간과 나이에 따라 120일에서 270일까지 받습니다."><meta property="og:url" content="https://toesanal.com/guide/unemployment-benefit-amount.html"><meta property="og:locale" content="ko_KR">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700;800&family=Gothic+A1:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+/* Layout: 히어로가 곧 도구다. 왼쪽 조건 입력, 오른쪽 '사직서 봉투' 결과 카드. 아래로 퇴사일 그래프 → 놓치면 손해인 날 → 정산 내역 → 퇴사 후 일정 → 가이드. */
+:root{
+  --paper:#F3F4F7;      /* 서류 용지의 차가운 흰색 */
+  --sheet:#FFFFFF;
+  --ink:#1B2140;        /* 결재 서류 남색 잉크 */
+  --ink-2:#4F5573;
+  --ink-3:#8A8FA8;
+  --rule:#DADDE6;
+  --seal:#C9402A;       /* 인주 */
+  --seal-soft:#F8E3DE;
+  --hl:#F3D35B;         /* 형광펜 */
+  --go:#2E7D5B;
+  --shadow:0 1px 0 rgba(27,33,64,.04),0 18px 40px -24px rgba(27,33,64,.35);
+  --f-display:"Nanum Myeongjo","AppleMyungjo",Georgia,serif;
+  --f-body:"Gothic A1","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --r:6px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0F1222;--sheet:#171B30;--ink:#E8EAF3;--ink-2:#B0B5CC;--ink-3:#757B97;--rule:#2A2F4A;
+  --seal:#EE7A62;--seal-soft:#3A2220;--hl:#C9A93A;--go:#62C49A;
+  --shadow:0 1px 0 rgba(0,0,0,.25),0 18px 40px -24px rgba(0,0,0,.8);color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0F1222;--sheet:#171B30;--ink:#E8EAF3;--ink-2:#B0B5CC;--ink-3:#757B97;--rule:#2A2F4A;
+  --seal:#EE7A62;--seal-soft:#3A2220;--hl:#C9A93A;--go:#62C49A;
+  --shadow:0 1px 0 rgba(0,0,0,.25),0 18px 40px -24px rgba(0,0,0,.8);color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.7;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
+a{color:var(--ink)}
+h1,h2,h3{font-family:var(--f-display);font-weight:800;margin:0;text-wrap:balance;letter-spacing:-.01em}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.wrap{max-width:1160px;margin:0 auto;padding-inline:20px}
+@media(max-width:480px){.wrap{padding-inline:16px}}
+.eyebrow{font:600 12px var(--f-body);letter-spacing:.14em;color:var(--seal)}
+
+.top{border-bottom:1px solid var(--rule);background:var(--paper)}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:14px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-family:var(--f-display);font-weight:800;font-size:22px}
+.brand .sealmark{width:30px;height:30px;border-radius:50%;border:2px solid var(--seal);color:var(--seal);display:grid;place-items:center;font-size:13px;transform:rotate(-8deg)}
+.top nav{display:flex;gap:4px;flex-wrap:wrap}
+.top nav a{font-size:13px;color:var(--ink-2);text-decoration:none;padding:6px 10px;border-radius:999px}
+.top nav a:hover,.top nav a:focus-visible{background:var(--sheet);color:var(--ink)}
+@media(max-width:760px){.top nav{display:none}}
+
+.intro{padding-block:40px 24px;display:grid;gap:12px;max-width:760px}
+.intro h1{font-size:clamp(32px,5.2vw,56px);line-height:1.15}
+.intro h1 mark{background:linear-gradient(transparent 58%,var(--hl) 58%);color:inherit;padding:0 2px}
+.intro p{color:var(--ink-2);margin:0;font-size:16px;max-width:60ch}
+
+.tool{display:grid;grid-template-columns:340px minmax(0,1fr);gap:24px;align-items:start;padding-bottom:28px}
+@media(max-width:920px){.tool{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:22px}
+.panel h2{font-size:18px;margin-bottom:4px}
+.panel .sub{font-size:12px;color:var(--ink-3);margin:0 0 16px}
+.field{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;margin-bottom:14px;min-width:0}
+.field>label,.field>.lbl{font-size:13px;font-weight:600;color:var(--ink-2);display:flex;justify-content:space-between;gap:8px}
+.field small{font-weight:400;color:var(--ink-3)}
+.inp{display:flex;align-items:center;border:1px solid var(--rule);border-radius:var(--r);background:var(--paper)}
+.inp:focus-within{border-color:var(--ink);box-shadow:0 0 0 3px color-mix(in srgb,var(--ink) 14%,transparent)}
+.inp input,.inp select{flex:1;min-width:0;width:100%;border:0;background:transparent;color:var(--ink);font:500 15px var(--f-mono);padding:10px 12px;outline:none}
+.inp select{font-family:var(--f-body)}
+.inp span{font-size:13px;color:var(--ink-3);padding-right:12px}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.toggles{display:grid;gap:8px;margin-top:4px}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--ink-2);cursor:pointer}
+.check input{margin-top:4px;accent-color:var(--ink)}
+.hint{font-size:12px;color:var(--ink-3);margin:0}
+
+/* 사직서 봉투 카드 */
+.envelope{position:relative;background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.envelope::before{content:"";position:absolute;inset:0 0 auto 0;height:8px;background:repeating-linear-gradient(90deg,var(--seal) 0 18px,transparent 18px 26px,var(--ink) 26px 44px,transparent 44px 52px);opacity:.75}
+.env-in{padding:30px 28px 26px;display:grid;gap:18px}
+@media(max-width:480px){.env-in{padding:26px 18px 20px}}
+.env-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.env-head .title{font-family:var(--f-display);font-size:26px;font-weight:800;letter-spacing:.5em}
+.stamp{width:74px;height:74px;flex:none;border-radius:50%;border:3px solid var(--seal);color:var(--seal);display:grid;place-items:center;text-align:center;font:800 13px/1.15 var(--f-display);transform:rotate(-12deg);opacity:.9}
+.verdict{font-family:var(--f-display);font-size:clamp(24px,3.2vw,34px);line-height:1.3;font-weight:800}
+.verdict .num{font-family:var(--f-mono);font-weight:700}
+.verdict .plus{color:var(--seal)}
+.verdict .ok{color:var(--go)}
+.cmp{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:12px;align-items:stretch}
+.inp input[type=date]{min-width:0;width:100%}
+@media(max-width:560px){.cmp{grid-template-columns:minmax(0,1fr)}.cmp .arrow{display:none}}
+.cmp .box{border:1px solid var(--rule);border-radius:var(--r);padding:14px 16px;background:var(--paper)}
+.cmp .box.best{border-color:var(--seal);background:var(--seal-soft)}
+.cmp .box small{display:block;font-size:12px;color:var(--ink-3)}
+.cmp .box b{display:block;font-family:var(--f-mono);font-size:22px;font-weight:700;margin-top:2px}
+.cmp .box span{font-size:12px;color:var(--ink-2)}
+.cmp .arrow{display:grid;place-items:center;color:var(--ink-3);font-size:22px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{font:600 13px var(--f-body);border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:999px;padding:9px 16px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:focus-visible{outline:2px solid var(--seal);outline-offset:2px}
+.toast{font-size:12px;color:var(--go);align-self:center}
+
+.sec{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:28px;margin-bottom:24px;min-width:0}
+@media(max-width:480px){.sec{padding:20px 16px}}
+.sec-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.sec-h h2{font-size:clamp(21px,2.4vw,26px)}
+.sec .lead{color:var(--ink-2);margin:0 0 18px;max-width:64ch;font-size:14px}
+.chart{width:100%;height:auto;display:block}
+.chart text{font-family:var(--f-mono);font-size:11px;fill:var(--ink-3)}
+
+.events{display:grid;gap:0;border-top:1px solid var(--rule)}
+.ev{display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:16px;align-items:center;padding:14px 0;border-bottom:1px solid var(--rule)}
+@media(max-width:560px){.ev{grid-template-columns:1fr auto}.ev .d{grid-column:1/-1}}
+.ev .d{font-family:var(--f-mono);font-size:13px;color:var(--ink-2)}
+.ev .d b{display:block;font-size:15px;color:var(--ink)}
+.ev .w{font-size:14px}
+.ev .w small{display:block;color:var(--ink-3);font-size:12px}
+.ev .g{font-family:var(--f-mono);font-weight:700;color:var(--seal);white-space:nowrap}
+.ev.past{opacity:.55}
+.empty{color:var(--ink-3);font-size:14px;padding:12px 0}
+
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:520px;font-size:14px}
+th,td{padding:11px 8px;border-bottom:1px solid var(--rule);text-align:right}
+th:first-child,td:first-child{text-align:left}
+th{font-size:12px;font-weight:600;color:var(--ink-3)}
+td{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+td:first-child{font-family:var(--f-body)}
+td .why{display:block;font-family:var(--f-body);font-size:12px;color:var(--ink-3)}
+tr.total td{font-weight:700;border-bottom:2px solid var(--ink)}
+.col-best{background:var(--seal-soft)}
+
+.after{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media(max-width:860px){.after{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.after{grid-template-columns:1fr}}
+.step{border:1px solid var(--rule);border-radius:var(--r);padding:16px;background:var(--paper);display:grid;gap:4px;align-content:start}
+.step .when{font:700 12px var(--f-mono);color:var(--seal)}
+.step b{font-size:15px}
+.step p{margin:0;font-size:13px;color:var(--ink-2)}
+
+.ad{border:1px dashed var(--rule);border-radius:var(--r);min-height:100px;display:grid;place-items:center;text-align:center;color:var(--ink-3);font-size:12px;margin-bottom:24px}
+.ad b{display:block;font:500 10px var(--f-mono);letter-spacing:.2em}
+
+.guides{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media(max-width:760px){.guides{grid-template-columns:1fr}}
+details.g{border:1px solid var(--rule);border-radius:var(--r);background:var(--paper)}
+details.g summary{cursor:pointer;list-style:none;padding:16px 18px;display:grid;gap:2px}
+details.g summary::-webkit-details-marker{display:none}
+details.g summary small{font:600 11px var(--f-body);letter-spacing:.1em;color:var(--seal)}
+details.g summary strong{font-family:var(--f-display);font-size:18px;line-height:1.4}
+details.g[open] summary{border-bottom:1px dashed var(--rule)}
+details.g .body{padding:6px 18px 16px;font-size:14px;color:var(--ink-2)}
+details.g .body p{margin:10px 0}
+details.g .body ul{margin:8px 0;padding-left:18px}
+
+.basis{font-size:13px;color:var(--ink-2)}
+.basis ul{margin:8px 0 0;padding-left:18px;display:grid;gap:4px}
+footer{border-top:1px solid var(--rule);padding-block:28px 44px;font-size:12px;color:var(--ink-3)}
+footer .wrap{display:grid;gap:6px}
+:focus-visible{outline:2px solid var(--seal);outline-offset:2px}
+@media(prefers-reduced-motion:no-preference){
+  .stamp{animation:press .5s cubic-bezier(.2,1.6,.4,1) both}
+  @keyframes press{from{transform:rotate(-12deg) scale(1.25);opacity:.4}to{transform:rotate(-12deg) scale(1);opacity:.9}}
+}
+
+.doc{max-width:720px;padding-block:40px 60px} .doc h1{font-size:clamp(28px,4vw,40px);margin-bottom:16px} .doc h2{font-size:20px;margin:28px 0 8px} .doc p,.doc li{color:var(--ink-2)}
+.crumb{font-size:12px;color:var(--ink-3);margin-bottom:10px}.crumb a{color:var(--ink-3)}
+.doc h3{font-size:17px;margin:20px 0 6px}
+.doc .meta{font-size:12px;color:var(--ink-3);margin:-6px 0 22px}
+.doc .lede{font-size:16px;color:var(--ink)}
+.formula{font-family:var(--f-mono);font-size:14px;background:var(--sheet);border:1px solid var(--rule);border-left:4px solid var(--seal);border-radius:var(--r);padding:14px 16px;margin:12px 0;overflow-x:auto}
+table.t{min-width:0;margin:12px 0;background:var(--sheet)}
+table.t td{font-family:var(--f-body)}
+.cta{margin:32px 0 8px}.cta a{display:inline-block;background:var(--ink);color:var(--paper);text-decoration:none;font-weight:600;padding:12px 20px;border-radius:999px}
+.rel{border-top:1px solid var(--rule);margin-top:32px;padding-top:16px}.rel ul{padding-left:18px}
+.glist{display:grid;gap:12px;padding:0;list-style:none}
+.glist a{display:grid;gap:4px;text-decoration:none;background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:16px 18px}
+.glist a:hover,.glist a:focus-visible{border-color:var(--ink)}
+.glist small{font:600 11px var(--f-body);letter-spacing:.1em;color:var(--seal)}
+.glist strong{font-family:var(--f-display);font-size:18px;line-height:1.4;color:var(--ink)}
+.glist span{font-size:13px;color:var(--ink-2)}
+.disc{font-size:12px;color:var(--ink-3);margin-top:28px}
+</style>
+<meta name="google-adsense-account" content="ca-pub-9077925235959210">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9077925235959210" crossorigin="anonymous"></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "2026 실업급여 금액과 받는 기간: 하루 66,048원부터 최대 270일", "description": "2026년 구직급여는 평균임금의 60%, 1일 하한 66,048원·상한 68,100원입니다. 가입기간과 나이에 따라 120일에서 270일까지 받습니다.", "datePublished": "2026-10-11", "dateModified": "2026-10-11", "inLanguage": "ko-KR", "mainEntityOfPage": "https://toesanal.com/guide/unemployment-benefit-amount.html", "author": {"@type": "Organization", "name": "퇴사날"}, "publisher": {"@type": "Organization", "name": "퇴사날"}}</script>
+</head><body>
+<header class="top"><div class="wrap"><a class="brand" href="/"><span class="sealmark" aria-hidden="true">날</span>퇴사날</a><nav aria-label="사이트"><a href="/">계산기</a><a href="/guide/">가이드</a><a href="/about.html">소개</a><a href="/privacy.html">개인정보처리방침</a></nav></div></header>
+<main class="wrap doc"><div class="crumb"><a href="/">퇴사날</a> › <a href="/guide/">가이드</a> › 실업급여</div><h1>2026 실업급여 금액과 받는 기간: 하루 66,048원부터 최대 270일</h1><p class="meta">실업급여 · 2026-10-11 기준</p><p class="lede">2026년 구직급여는 평균임금의 60%, 1일 하한 66,048원·상한 68,100원입니다. 가입기간과 나이에 따라 120일에서 270일까지 받습니다.</p>
+<h2>하루에 얼마를 받나</h2>
+<div class="formula">구직급여 일액 = 퇴사 전 3개월 1일 평균임금 × 60%</div>
+<p>다만 하한과 상한이 있습니다. 2026년 기준 <b>하한액은 66,048원</b>(최저시급 10,320원 × 80% × 8시간), <b>상한액은 68,100원</b>입니다. 하한과 상한의 차이가 크지 않아서, 실제로는 대부분의 사람이 하루 66,048원~68,100원 사이를 받습니다.</p>
+<p>월급 300만원이라면 평균임금의 60%가 약 58,700원으로 하한보다 낮아 하한액 66,048원을 받습니다. 30일로 치면 약 198만원입니다. 월급이 약 338만원을 넘으면 하한보다 많아지고, 약 348만원을 넘으면 상한액 68,100원에 걸립니다. 하루 근무시간이 8시간보다 짧은 단시간 근로자는 하한액이 근무시간에 비례해 줄어듭니다.</p>
+<h2>며칠을 받나: 소정급여일수</h2>
+<table class="t"><tr><th>고용보험 가입기간</th><th>50세 미만</th><th>50세 이상·장애인</th></tr>
+<tr><td>1년 미만</td><td>120일</td><td>120일</td></tr>
+<tr><td>1년 ~ 3년 미만</td><td>150일</td><td>180일</td></tr>
+<tr><td>3년 ~ 5년 미만</td><td>180일</td><td>210일</td></tr>
+<tr><td>5년 ~ 10년 미만</td><td>210일</td><td>240일</td></tr>
+<tr><td>10년 이상</td><td>240일</td><td>270일</td></tr></table>
+<p>나이는 이직일 기준입니다. 가입기간은 이전 직장 기간도 합산할 수 있습니다(이전 직장에서 구직급여를 받았다면 그 이전 기간은 제외).</p>
+<h2>구간 경계를 넘기는 퇴사일이 있습니다</h2>
+<p>가입기간 3년이 되기 일주일 전에 퇴사하면 150일, 일주일 뒤에 퇴사하면 180일입니다. 30일 차이는 약 200만원입니다. 만 50세 생일 직전과 직후도 마찬가지로 30일이 갈립니다. 퇴사날 계산기는 이런 경계일을 "놓치면 손해인 날"로 표시합니다.</p>
+<h2>총액 예시</h2>
+<p>45세, 가입기간 4년, 하한액 대상이라면 66,048원 × 180일 = 약 <b>1,189만원</b>입니다. 처음 7일은 대기기간이라 지급되지 않지만 받는 일수가 줄지는 않습니다.</p>
+<p class="cta"><a href="/">내 조건으로 퇴사일별 금액 계산해 보기 →</a></p><div class="rel"><h2>함께 보면 좋은 글</h2><ul><li><a href="/guide/unemployment-benefit-eligibility.html">실업급여 받는 조건 4가지: 180일, 비자발적 이직, 구직 의사, 신청 기한</a></li><li><a href="/guide/voluntary-resignation-benefit.html">자진 퇴사도 실업급여 받는 정당한 사유 10가지</a></li><li><a href="/guide/unemployment-benefit-application.html">실업급여 신청 방법: 퇴사 다음 날부터 첫 입금까지 순서대로</a></li></ul></div><p class="disc">이 글은 2026년 10월 기준 법령과 고시 금액을 바탕으로 작성한 일반 정보입니다. 개별 사안은 고용노동부 고객상담센터(1350)나 노무사와 확인하세요.</p></main>
+<footer><div class="wrap"><div><b style="color:var(--ink)">퇴사날</b> · 퇴사일 정산 시뮬레이터</div><div><a href="/guide/">가이드</a> · <a href="/about.html">소개</a> · <a href="/privacy.html">개인정보처리방침</a> · 문의 <a href="mailto:godaniday@gmail.com">godaniday@gmail.com</a></div></div></footer>
+</body></html>
