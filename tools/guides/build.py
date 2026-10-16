@@ -30,9 +30,9 @@ table.t td{font-family:var(--f-body)}
 .disc{font-size:12px;color:var(--ink-3);margin-top:28px}
 """
 NAV = ('<header class="top"><div class="wrap"><a class="brand" href="/"><span class="sealmark" aria-hidden="true">날</span>퇴사날</a>'
-       '<nav aria-label="사이트"><a href="/">계산기</a><a href="/guide/">가이드</a><a href="/about.html">소개</a><a href="/privacy.html">개인정보처리방침</a></nav></div></header>')
+       '<nav aria-label="사이트"><a href="/">계산기</a><a href="/guide/">가이드</a><a href="/about">소개</a><a href="/privacy">개인정보처리방침</a></nav></div></header>')
 FOOT = ('<footer><div class="wrap"><div><b style="color:var(--ink)">퇴사날</b> · 퇴사일 정산 시뮬레이터</div>'
-        '<div><a href="/guide/">가이드</a> · <a href="/about.html">소개</a> · <a href="/privacy.html">개인정보처리방침</a> · 문의 <a href="mailto:godaniday@gmail.com">godaniday@gmail.com</a></div></div></footer>')
+        '<div><a href="/guide/">가이드</a> · <a href="/about">소개</a> · <a href="/privacy">개인정보처리방침</a> · 문의 <a href="mailto:godaniday@gmail.com">godaniday@gmail.com</a></div></div></footer>')
 DISC = '<p class="disc">이 글은 2026년 10월 기준 법령과 고시 금액을 바탕으로 작성한 일반 정보입니다. 개별 사안은 고용노동부 고객상담센터(1350)나 노무사와 확인하세요.</p>'
 
 def page(title, desc, canon, body, ld=None):
@@ -57,12 +57,12 @@ by_cat = {}
 for a in ARTICLES:
     by_cat.setdefault(a["cat"], []).append(a)
 for a in ARTICLES:
-    url = f"https://toesanal.com/guide/{a['slug']}.html"
+    url = f"https://toesanal.com/guide/{a['slug']}"
     rel = [x for x in by_cat[a["cat"]] if x is not a][:3]
     if len(rel) < 3:
         rel += [x for x in ARTICLES if x is not a and x not in rel][: 3 - len(rel)]
     rel_html = '<div class="rel"><h2>함께 보면 좋은 글</h2><ul>' + "".join(
-        f'<li><a href="/guide/{r["slug"]}.html">{r["title"]}</a></li>' for r in rel) + "</ul></div>"
+        f'<li><a href="/guide/{r["slug"]}">{r["title"]}</a></li>' for r in rel) + "</ul></div>"
     body = (f'<div class="crumb"><a href="/">퇴사날</a> › <a href="/guide/">가이드</a> › {a["cat"]}</div>'
             f'<h1>{a["title"]}</h1><p class="meta">{a["cat"]} · {DATE} 기준</p>'
             f'<p class="lede">{a["desc"]}</p>{a["body"]}{CALC}{rel_html}{DISC}')
@@ -77,7 +77,7 @@ order = ["퇴직금", "연차", "실업급여", "퇴사 후", "퇴사 준비"]
 lst = ""
 for c in order:
     lst += f"<h2>{c}</h2><ul class=\"glist\">" + "".join(
-        f'<li><a href="/guide/{a["slug"]}.html"><small>{c}</small><strong>{a["title"]}</strong><span>{a["desc"]}</span></a></li>'
+        f'<li><a href="/guide/{a["slug"]}"><small>{c}</small><strong>{a["title"]}</strong><span>{a["desc"]}</span></a></li>'
         for a in by_cat[c]) + "</ul>"
 idx = ('<div class="crumb"><a href="/">퇴사날</a> › 가이드</div><h1>퇴사 가이드</h1>'
        '<p class="lede">퇴직금, 연차수당, 실업급여, 퇴사 후 4대보험까지. 퇴사 전에 알아야 할 돈 이야기를 법 조문과 실제 계산 예시로 정리했습니다.</p>'
@@ -89,8 +89,8 @@ open(os.path.join(ROOT, "guide", "index.html"), "w", encoding="utf-8").write(
 
 # sitemap
 urls = ["https://toesanal.com/", "https://toesanal.com/guide/"] + \
-       [f"https://toesanal.com/guide/{a['slug']}.html" for a in ARTICLES] + \
-       ["https://toesanal.com/about.html", "https://toesanal.com/privacy.html"]
+       [f"https://toesanal.com/guide/{a['slug']}" for a in ARTICLES] + \
+       ["https://toesanal.com/about", "https://toesanal.com/privacy"]
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + \
      "".join(f"  <url><loc>{u}</loc><lastmod>{DATE}</lastmod></url>\n" for u in urls) + "</urlset>\n"
 open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8").write(sm)

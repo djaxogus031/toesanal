@@ -3,6 +3,8 @@
   "compatibility_date": "2026-10-01",
   "assets": {
     "directory": "./public",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    // foo.html은 /foo 로 리디렉션된다. 사이트맵·링크·canonical은 확장자 없는 주소를 쓴다.
+    "html_handling": "auto-trailing-slash"
   }
 }
